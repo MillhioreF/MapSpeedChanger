@@ -118,7 +118,7 @@ public class Parser
         int breakStart = 0;
         int breakEnd = 0;
         int currentPlace = 0;
-        String sloser = "";
+        String lineChunk = "";
         int startPlace = 0;
         int endPlace = 0;
         int start2 = 0;
@@ -138,7 +138,7 @@ public class Parser
             currentLine = Input.osufile.nextLine();
             if (foundObjects != true)
             {
-                sloser = currentLine;
+                lineChunk = currentLine;
                 if (currentLine.indexOf("P") == 0 && currentLine.indexOf("T") == 7)
                 {
                     modNum = Double.valueOf(currentLine.substring(13, currentLine.length()));
@@ -170,18 +170,18 @@ public class Parser
                     }
                     else
                     {
-                        Output.writeFile(sloser);
+                        Output.writeFile(lineChunk);
                     }
                 } 
                 else if (currentLine.indexOf("V") == 0 && currentLine.indexOf("n") == 6)
                 {
                     if (Input.isBPM == false)
                     {
-                        Output.writeFile(sloser + " " + df.format(Input.speedpercent) + "% Speed");
+                        Output.writeFile(lineChunk + " " + df.format(Input.speedpercent) + "% Speed");
                     }
                     else
                     {
-                        Output.writeFile(sloser + " " + df.format(Input.newBPM) + "BPM");
+                        Output.writeFile(lineChunk + " " + df.format(Input.newBPM) + "BPM");
                     }
                 }
                 else if (currentLine.indexOf("/") == 0 && currentLine.indexOf("P") == 8)
@@ -191,7 +191,7 @@ public class Parser
                     {
                         System.out.println("Found breaks!");
                     }
-                    Output.writeFile(sloser);
+                    Output.writeFile(lineChunk);
                 }
                 else if (currentLine.indexOf("[") == 0 && currentLine.indexOf("]") == 13)
                 {
@@ -200,7 +200,7 @@ public class Parser
                     {
                         System.out.println("Found timing sections!");
                     }
-                    Output.writeFile(sloser);
+                    Output.writeFile(lineChunk);
                 }
                 else if (currentLine.indexOf("[") == 0 && currentLine.indexOf("s") == 10)
                 {
@@ -209,7 +209,7 @@ public class Parser
                     {
                         System.out.println("Found hitobjects!");
                     }
-                    Output.writeFile(sloser);
+                    Output.writeFile(lineChunk);
                 }
                 else if (breaksFound == true)
                 {
@@ -220,7 +220,7 @@ public class Parser
                         {
                             System.out.println("No more breaks...");
                         }
-                        Output.writeFile(sloser);
+                        Output.writeFile(lineChunk);
                     }
                     else
                     {
@@ -264,7 +264,7 @@ public class Parser
                     }
                     else
                     {
-                        timingLine = sloser;
+                        timingLine = lineChunk;
                         startPlace = 0;
                         endPlace = 0;
                         modNum = 0.0;
@@ -291,7 +291,7 @@ public class Parser
                 }
                 else
                 {
-                    Output.writeFile(sloser);
+                    Output.writeFile(lineChunk);
                 }
             }
             else
