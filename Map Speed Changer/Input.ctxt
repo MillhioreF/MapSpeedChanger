@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ reInitialize()
+comment1.params=
+comment1.target=void\ makeScanner()
+comment2.params=
+comment2.target=void\ getInfo()
+comment3.params=
+comment3.target=void\ didntFollowInstructions()
+comment4.params=failed
+comment4.target=void\ tryAgain(int)
+numComments=5

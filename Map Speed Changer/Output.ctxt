@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=line
+comment0.target=void\ writeFile(java.lang.String)
+comment1.params=
+comment1.target=void\ clearOldFile()
+comment2.params=
+comment2.target=void\ rehook()
+comment3.params=
+comment3.target=void\ end()
+numComments=4
