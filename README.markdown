@@ -25,7 +25,7 @@ by MillhioreF
 Enjoy!
 
 
-~~*~* CHANGELOG *~*~~
+~~~*~* CHANGELOG *~*~~~
 
 Version 1.32 (Aug 31, 2013)
 -Fixed all maps showing up as "BPM", even ones that used percent.
@@ -70,7 +70,7 @@ Version 1.0 (Jan 7, 2013)
 -Initial release
 
 
-~~*~* KNOWN ISSUES *~*~~
+~~~*~* KNOWN ISSUES *~*~~~
 
 -If the output filename is the same as an existing filename, it'll overwrite. I'll fix this later.
 -Stack leniency, difficulty settings, etc. aren't adjusted to fit the new speed. Low priority for the moment.
