@@ -17,7 +17,7 @@ by MillhioreF
 
 - The .osu filename MAY be weird when you drop it into the song folder - this fixes itself after saving it in the editor, which I hope you do due to the point above.
 
-- Source code is public and can be found at *github address goes here*
+- Source code is public and can be found at https://github.com/MillhioreF/MapSpeedChanger/ . Be warned that the code is absolute shit and probably is hardly readable - feel free to ask me what the hell some of my code is doing.
 
 - Bugs, questions and comments should be posted in this tool's thread: http://osu.ppy.sh/forum/t/114765/
 
@@ -28,7 +28,7 @@ Enjoy!
 ~~~*~* CHANGELOG *~*~~~
 
 Version 1.32 (Aug 31, 2013)
--Fixed all maps showing up as "BPM", even ones that used percent.
+-Pushed to github.
 
 Version 1.311 (Aug 31, 2013)
 -Fixed broken debug code
