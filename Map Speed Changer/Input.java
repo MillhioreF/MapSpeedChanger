@@ -27,11 +27,12 @@ public class Input
     public static double bpmValue = 0;
     public static String mp3name = "";
     public static String speedString = "";
-    static Scanner osufile = null; // initializes the scanner
+    public static Scanner osufile = null; // initializes the scanner
     public static String filename = "";
     public static String filenameP = ""; // p = permanent
     public static String filenameN = "";
     public static String query = "";
+    static Scanner settings = null;
     
     public static void reInitialize()
     {
@@ -53,6 +54,36 @@ public class Input
         getInfo();
     }
     
+    public static int guiActive()
+    {
+        try
+        {
+            settings = new Scanner("MSC.ini");
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+        if (debug == true)
+        {
+            System.out.println("Settings found!");
+        }
+        parseGuiSettings();
+        return 1;
+    }
+    
+    public static void parseGuiSettings()
+    {
+        settings.nextLine(); // throw away header ;)
+        filename = settings.nextLine();
+        filenameP = filename;
+        makeScanner();
+        speedString = settings.nextLine();
+        settings.close();
+        Output.clearTempFile();
+        Parser.parseFile();
+    }
+    
     public static void makeScanner()
     {
         try 
@@ -62,7 +93,7 @@ public class Input
             {
                 System.out.println("Attempting scanner creation for " + filenameN);
             }
-            osufile = new Scanner (osu); // creates the file scanner
+            osufile = new Scanner(osu); // creates the file scanner
             if (debug == true)
             {
                 System.out.println("Made a scanner for " + filenameN);
@@ -114,7 +145,20 @@ public class Input
             "Or you can specify the the desired new BPM (e.g. 180)\n\n" +
             "Input: ");
         speedString = keyboard.nextLine();
-        
+        processSpeedString();
+        Output.clearOldFile();
+        Parser.parseFile();
+        return;
+    }
+    
+    public static void didntFollowInstructions()
+    {
+        System.out.println("People who don't follow instructions make Millhiore sad. :(");
+        tryAgain(1);
+    }
+    
+    public static void processSpeedString()
+    {
         if (speedString.indexOf("%") != -1)
         {
             speedString = speedString.replaceAll("%","");
@@ -174,15 +218,6 @@ public class Input
                 TempoSpeeder.importFile(mp3name);
             }*/
         }
-        Output.clearOldFile();
-        Parser.parseFile();
-        return;
-    }
-    
-    public static void didntFollowInstructions()
-    {
-        System.out.println("People who don't follow instructions make Millhiore sad. :(");
-        tryAgain(1);
     }
     
     public static void tryAgain(int failed)

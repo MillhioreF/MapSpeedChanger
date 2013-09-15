@@ -13,12 +13,15 @@ public class Main
     public static void main (String[] args)
     {
         debug(0);
-        Input.getInfo();
+        if (Input.guiActive() == 0)
+        {
+            Input.getInfo();
+        }
         Output.end();
         while (true)
         {
-        System.out.println(".osu file successfully created!\n");
-        Input.tryAgain(0);
+            System.out.println(".osu file successfully created!\n");
+            Input.tryAgain(0);
         }
     }
     

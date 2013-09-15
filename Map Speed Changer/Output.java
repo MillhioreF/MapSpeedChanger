@@ -10,6 +10,7 @@ public class Output
     //mandatory
     static PrintWriter out = null;
     static File file = new File("New " + Input.filenameN);
+    static File settings = new File("MSC.ini");
     
     public static void writeFile (String line)
     {
@@ -30,6 +31,11 @@ public class Output
     public static void clearOldFile()
     {
         file.delete();
+    }
+    
+    public static void clearTempFile()
+    {
+        settings.delete();
     }
     
     public static void rehook()
