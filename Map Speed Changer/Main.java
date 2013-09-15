@@ -12,7 +12,7 @@ public class Main
     
     public static void main (String[] args)
     {
-        debug(0);
+        debug(2);
         if (Input.guiActive() == 0)
         {
             Input.getInfo();

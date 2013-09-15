@@ -8,7 +8,7 @@ public class Input
     static boolean superdebug = false;
     
     //options
-    public static boolean askForAudio = false;
+    public static boolean askForAudio = true;
     public static boolean convertMP3 = false;
     public static boolean loop = false;
     public static boolean displayOldBPM = false;
@@ -32,6 +32,7 @@ public class Input
     public static String filenameP = ""; // p = permanent
     public static String filenameN = "";
     public static String query = "";
+    public static String settingLine = "";
     static Scanner settings = null;
     
     public static void reInitialize()
@@ -51,6 +52,7 @@ public class Input
         String filenameP = ""; // p = permanent
         String filenameN = "";
         query = "";
+        settingLine = "";
         getInfo();
     }
     
@@ -58,10 +60,14 @@ public class Input
     {
         try
         {
-            settings = new Scanner("MSC.ini");
+            settings = new Scanner(new File("speed.ini"));
         }
         catch (Exception e)
         {
+            if (debug == true)
+            {
+                System.out.println("No speed.ini here");
+            }
             return 0;
         }
         if (debug == true)
@@ -74,11 +80,72 @@ public class Input
     
     public static void parseGuiSettings()
     {
-        settings.nextLine(); // throw away header ;)
-        filename = settings.nextLine();
-        filenameP = filename;
-        makeScanner();
-        speedString = settings.nextLine();
+        if (debug == true)
+        {
+            System.out.println("Starting speed.ini parse");
+        }
+        if (filename.indexOf("[") != -1 && filename.indexOf ("]") != -1)
+        {
+            Parser.betterName = true;
+        }
+        while (settings.hasNext())
+        {
+            try
+            {
+                settingLine = settings.nextLine();
+                if (superdebug == true)
+                    {
+                        System.out.println("current setting line: " + settingLine);
+                    }
+                if (settingLine.substring(0, 7).compareTo("MP3Name") == 0)
+                {
+                    mp3name = settingLine.substring(8);
+                    if (superdebug == true)
+                    {
+                        System.out.println("read mp3name: " + mp3name);
+                    }
+                }
+                else if (settingLine.substring(0, 11).compareTo("OsuFileName") == 0)
+                {
+                    filename = settingLine.substring(12);
+                    filenameP = filename;
+                    filenameN = filename;
+                    if (superdebug == true)
+                    {
+                        System.out.println("read filename: " + filename);
+                    }
+                    makeScanner();
+                }
+                else if (settingLine.substring(0, 12).compareTo("SpeedChange=") == 0)
+                {
+                    speedString = settingLine.substring(12);
+                    if (superdebug == true)
+                    {
+                        System.out.println("read speedstring: " + speedString);
+                    }
+                }
+                else if (settingLine.substring(0, 15).compareTo("SpeedChangeType") == 0)
+                {
+                    if (superdebug == true)
+                    {
+                        System.out.print("found changetype: ");
+                    }
+                    if (settingLine.substring(16).compareTo("BPM") != 0)
+                    {
+                        speedString = speedString + "%";
+                        if (superdebug == true)
+                        {
+                            System.out.println(settingLine.substring(16) + " .\nspeedString is now " + speedString);
+                        }
+                    }
+                }
+            }
+            catch (StringIndexOutOfBoundsException e)
+            {
+                System.out.println("wrong string");
+            }
+        }
+        processSpeedString();
         settings.close();
         Output.clearTempFile();
         Parser.parseFile();
@@ -176,6 +243,10 @@ public class Input
         }
         catch (NumberFormatException e)
         {
+            if (debug == true)
+            {
+                System.out.println("non-double speedstring");
+            }
             didntFollowInstructions();
         }
         try 
@@ -188,10 +259,18 @@ public class Input
         }
         catch (NumberFormatException e)
         {
+            if (debug == true)
+            {
+                System.out.println("non-double speedstring");
+            }
             didntFollowInstructions();
         }
         if (speedString.compareTo(speedString.toUpperCase()) != speedString.compareTo(speedString.toLowerCase()))
         {
+            if (debug == true)
+            {
+                System.out.println("alphabets in speedstring");
+            }
             didntFollowInstructions();
         }
         else if (speedString.length() != 0)
@@ -249,8 +328,7 @@ public class Input
         {
             if (debug == true)
             {
-                System.out.println("Loop disabled; press any key to exit.");
-                speedString = keyboard.nextLine();
+                System.out.println("Loop disabled; exiting.");
             }
             System.exit(0);
         }

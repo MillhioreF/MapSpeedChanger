@@ -10,9 +10,23 @@ public class Output
     //mandatory
     static PrintWriter out = null;
     static File file = new File("New " + Input.filenameN);
-    static File settings = new File("MSC.ini");
+    static File settings = new File("speed.ini");
     
-    public static void writeFile (String line)
+    public static void done()
+    {
+        try 
+        {
+            out = new PrintWriter(new BufferedWriter(new FileWriter(new File("done.txt"), true)));
+        }
+        catch (IOException e)
+        {
+            System.out.println("wtf");
+        }
+        out.write(0);
+        out.flush();
+    }
+    
+    public static void writeFile(String line)
     {
         try 
         {
@@ -51,6 +65,14 @@ public class Output
             if (debug == true)
             {
                 System.out.println("Made a new file: " + Input.filename);
+            }
+        }
+        else
+        {
+            file = new File("New " + Input.filenameN);
+            if (debug == true)
+            {
+                System.out.println("Made a new file: " + Input.filenameN);
             }
         }
         Input.makeScanner();
