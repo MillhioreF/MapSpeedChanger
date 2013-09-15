@@ -149,6 +149,7 @@ public class Input
         settings.close();
         Output.clearTempFile();
         Parser.parseFile();
+        Output.done();
     }
     
     public static void makeScanner()
